@@ -7,20 +7,20 @@ export interface IEmoDataset {
     };
 }
 
-interface EmoSet {
+export interface EmoSet {
     id: string;
     label: string;
     items: Item[];
     preview?: null | string;
 }
 
-interface Item {
+export interface Item {
     label: string;
     link: string;
     preview?: null | string;
 }
 
-type EmoKey = 'emojiSet' | 'emoteSet';
+export type IEmoKey = 'emojiSet' | 'emoteSet';
 
 export class Emoplus {
     dataset: IEmoDataset;
@@ -54,7 +54,7 @@ export class Emoplus {
         return JSON.stringify(this.dataset);
     }
 
-    createSet(id: string, use: EmoKey = 'emojiSet') {
+    createSet(id: string, use: IEmoKey = 'emojiSet') {
         // 如果已經有相同 id 的分類就不動作
         if (id in this.dataset[use]) {
             return;
@@ -66,8 +66,16 @@ export class Emoplus {
         };
     }
 
-    deleteSet(id: string, use: EmoKey = 'emojiSet') {
+    deleteSet(id: string, use: IEmoKey = 'emojiSet') {
         delete this.dataset[use][id];
+    }
+
+    deleteItem(id: string, index: number, use: IEmoKey = 'emojiSet') {
+        this.dataset[use][id].items.splice(index, 1);
+    }
+
+    pushItem(id: string, items: Item[], use: IEmoKey = 'emojiSet') {
+        this.dataset[use][id].items.push(...items);
     }
 }
 
