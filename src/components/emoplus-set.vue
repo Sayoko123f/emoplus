@@ -6,7 +6,7 @@
         <div v-for="(obj, id) in prop.set">
             <h3 class="font-bold">{{ obj.label }}</h3>
             <span>({{ obj.items.length }})</span>
-            <div class="flex flex-wrap">
+            <div class="flex flex-wrap gap-1">
                 <div
                     class="group relative flex h-[128px] w-[128px] items-center justify-center rounded"
                     v-for="(item, i) in obj.items"
@@ -44,7 +44,7 @@
                         <img
                             class="max-h-full object-cover object-center"
                             v-else
-                            :src="item.link"
+                            :src="item.preview ? item.preview as string:item.link"
                             :title="item.label"
                             :alt="item.label"
                         />
@@ -65,6 +65,7 @@
                     :use="prop.use"
                     :id="editPannel.id"
                     :index="editPannel.index"
+                    :close="closeEditPannel"
                 />
             </OverlayModal>
         </Transition>
